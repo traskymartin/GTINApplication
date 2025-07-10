@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -67,9 +66,7 @@ public class GTINService {
 
         for (Gtin gtin : allGtins) {
             Long productId = gtin.getProduct().getProductId();
-            List<Batch> positive = batchRepo.findAll().stream()
-                .filter(b -> b.getProduct().getProductId().equals(productId) && b.getAvailableQuantity() > 0)
-                .collect(Collectors.toList());
+            List<Batch> positive = batchRepo.findPositiveBatchesByProductId(productId);
 
             List<Batch> latestZeroOrNegative = batchRepo
                 .findTop1ByProductProductIdAndAvailableQuantityLessThanEqualOrderByInwardedOnDesc(productId, 0);

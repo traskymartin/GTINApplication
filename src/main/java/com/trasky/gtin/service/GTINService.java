@@ -7,9 +7,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.trasky.gtin.dtos.BatchRequest;
 import com.trasky.gtin.dtos.GtinRequest;
-import com.trasky.gtin.dtos.ProductRequest;
 import com.trasky.gtin.entity.Batch;
 import com.trasky.gtin.entity.Gtin;
 import com.trasky.gtin.entity.Product;
@@ -26,26 +24,6 @@ public class GTINService {
     private final ProductRepository productRepo;
     private final BatchRepository batchRepo;
     private final GtinRepository gtinRepo;
-
-    public Product createProduct(ProductRequest request) {
-        Product product = new Product();
-        product.setProductName(request.getProductName());
-        product.setCreatedOn(request.getCreatedOn());
-        return productRepo.save(product);
-    }
-
-    public Batch createBatch(BatchRequest request) {
-        Product product = productRepo.findById(request.getProductId())
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        Batch batch = new Batch();
-        batch.setProduct(product);
-        batch.setMrp(request.getMrp());
-        batch.setSp(request.getSp());
-        batch.setPurchasePrice(request.getPurchasePrice());
-        batch.setAvailableQuantity(request.getAvailableQuantity());
-        batch.setInwardedOn(request.getInwardedOn());
-        return batchRepo.save(batch);
-    }
 
     public Gtin createGtin(GtinRequest request) {
         Product product = productRepo.findById(request.getProductId())

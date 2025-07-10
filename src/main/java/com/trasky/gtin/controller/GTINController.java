@@ -10,12 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trasky.gtin.dtos.BatchRequest;
 import com.trasky.gtin.dtos.GtinRequest;
-import com.trasky.gtin.dtos.ProductRequest;
 import com.trasky.gtin.entity.Batch;
 import com.trasky.gtin.entity.Gtin;
-import com.trasky.gtin.entity.Product;
 import com.trasky.gtin.service.GTINService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,16 +23,6 @@ import lombok.RequiredArgsConstructor;
 public class GTINController {
 
     private final GTINService gtinService;
-
-    @PostMapping("/create/product")
-    public Product createProduct(@RequestBody ProductRequest request) {
-        return gtinService.createProduct(request);
-    }
-
-    @PostMapping("/create/batch")
-    public Batch createBatch(@RequestBody BatchRequest request) {
-        return gtinService.createBatch(request);
-    }
 
     @PostMapping("/create/gtin")
     public Gtin createGtin(@RequestBody GtinRequest request) {
